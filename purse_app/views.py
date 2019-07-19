@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def purse_app_start(request):
+    return render(request, 'purse_app/start.html', {})

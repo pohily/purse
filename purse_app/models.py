@@ -6,7 +6,7 @@ from django.utils import timezone
 class Purchase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
-    budget_line = models.CharField(max_length=100)
+    budget_line = models.ForeignKey('PurchaseBudgetLine', to_field='line', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=200)
 
@@ -22,7 +22,7 @@ class Purchase(models.Model):
 class Income(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
-    budget_line = models.CharField(max_length=100)
+    budget_line = models.ForeignKey('IncomeBudgetLine', to_field='line', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=200)
 
@@ -33,3 +33,11 @@ class Income(models.Model):
 
     def __str__(self):
         return f'{self.date} {self.amount} {self.budget_line} {self.comment[:20]} ...'
+
+
+class PurchaseBudgetLine(models.Model):
+    line = models.CharField(max_length=40, unique=True)
+
+
+class IncomeBudgetLine(models.Model):
+    line = models.CharField(max_length=40, unique=True)

@@ -16,7 +16,7 @@ class Purchase(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line} {self.comment[:20]} ...'
+        return f'{self.date} {self.amount} {self.budget_line_id} {self.comment[:20]} ...'
 
 
 class Income(models.Model):
@@ -32,7 +32,7 @@ class Income(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line} {self.comment[:20]} ...'
+        return f'{self.date} {self.amount} {self.budget_line_id} {self.comment[:20]} ...'
 
 
 class PurchaseBudgetLine(models.Model):

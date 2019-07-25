@@ -1,0 +1,16 @@
+{% extends 'purse_app/base.html' %}
+
+{% block content %}
+    <table class="table">
+    {% for p in purchases %}
+
+            <tr class="table">
+                <td>{{ p.date }}</td>
+                <td>{{ p.budget_line|linebreaksbr }}</td>
+                <td>{{ p.amount|linebreaksbr }}</td>
+                <td>{{ p.comment|linebreaksbr }}</td>
+            </tr>
+
+    {% endfor %}
+    </table>
+{% endblock %}

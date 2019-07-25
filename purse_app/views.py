@@ -12,7 +12,7 @@ def income(request):
 
 
 def purchase(request):
-    purchases = Purchase.objects.all()[:10]
+    purchases = Purchase.objects.all().order_by('date')[:10]
     return render(request, 'purse_app/purchase.html', {'purchases': purchases})
 
 

@@ -19,4 +19,5 @@ from . import views
 
 urlpatterns = [
     path('', views.purse_app_start, name='purse_app_start'),
+    path('purse_app/purchase/', views.purchase, name='purchase'),
 ]

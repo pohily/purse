@@ -31,6 +31,11 @@ body {
 .content h1 a, .content h1 a:visited {
     color: #000000;
 
+}
+
+th, td {border: 1px }
+table {border: 3px }
+
 
 .date {
     color: #828282;

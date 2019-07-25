@@ -1,6 +1,11 @@
 {% extends 'purse_app/base.html' %}
 
 {% block content %}
+
+    <a href="{% url 'new_purchase' %}" class="top-menu">
+        <span class="glyphicon glyphicon-plus">Новая накладная</span>
+    </a>
+    <br>
     <table class="table">
     {% for p in purchases %}
 

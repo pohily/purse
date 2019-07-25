@@ -34,7 +34,7 @@ body {
 }
 
 th, td {border: 1px }
-table {border: 3px }
+table {border: 3px}
 
 
 .date {
@@ -50,8 +50,7 @@ table {border: 3px }
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
-    float: right;
+    color: #828282;
     font-size: 26pt;
     margin-right: 20px;
 }

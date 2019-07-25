@@ -18,7 +18,7 @@ def purchase(request):
 
 def debit(request):
     return render(request, 'purse_app/debit.html', {})
-gi
+
 
 def credit(request):
     return render(request, 'purse_app/credit.html', {})

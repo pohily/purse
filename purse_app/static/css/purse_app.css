@@ -3,6 +3,7 @@ h1 a {
 }
 h1, h2, h3, h4 {
     font-family: 'Open Sans', sans-serif;
+    font-size: 18pt;
 }
 
 body {
@@ -23,10 +24,9 @@ body {
 
 .content {
     margin-left: 40px;
-}
-.content {
     margin-bottom: 50px;
 }
+
 
 .content h1 a, .content h1 a:visited {
     color: #000000;
@@ -55,6 +55,11 @@ table {border: 3px}
     color: #828282;
     font-size: 26pt;
     margin-right: 20px;
+}
+.settings {
+    color: #828282;
+    font-size: 26pt;
+    float-right;
 }
 
 

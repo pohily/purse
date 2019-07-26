@@ -19,9 +19,16 @@ from . import views
 
 urlpatterns = [
     path('', views.purse_app_start, name='purse_app_start'),
+
+    path('purse_app/settings/', views.settings, name='settings'),
+    path('purse_app/summary_settings/', views.summary_settings, name='summary_settings'),
+    path('purse_app/purchase_bl/', views.purchase_bl, name='purchase_bl'),
+    path('purse_app/income_bl/', views.income_bl, name='income_bl'),
+
     path('purse_app/purchase/', views.purchase, name='purchase'),
     path('purse_app/new_purchase/', views.new_purchase, name='new_purchase'),
     path('purse_app/purchase_edit/<int:pk>/', views.purchase_edit, name='purchase_edit'),
+
     path('purse_app/income/', views.income, name='income'),
     path('purse_app/new_income/', views.new_income, name='new_income'),
     path('purse_app/income_edit/<int:pk>/', views.income_edit, name='income_edit'),

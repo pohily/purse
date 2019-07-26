@@ -1,11 +1,50 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
-from .forms import PurchaseForm, IncomeForm
+from .forms import *
 
 
 def purse_app_start(request):
     return render(request, 'purse_app/start.html', {})
+
+
+def settings(request):
+    return render(request, 'purse_app/settings.html', {})
+
+
+def summary_settings(request):
+    if request.method == "POST":
+        form = SummaryForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.total = item.cash + item.total_debit - item.total_credit
+            item.save()
+            return redirect('settings')
+    else:
+        form = SummaryForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
+def purchase_bl(request):
+    if request.method == "POST":
+        form = PurchaseBlForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('settings')
+    else:
+        form = PurchaseBlForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
+def income_bl(request):
+    if request.method == "POST":
+        form = IncomeBlForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('settings')
+    else:
+        form = IncomeBlForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
 def income(request):

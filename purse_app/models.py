@@ -3,6 +3,13 @@ from django.conf import settings
 from django.utils import timezone
 
 
+class Summary(models.Model):
+    cash = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total_debit = models.DecimalField(max_digits=10, decimal_places=2)
+    total_credit = models.DecimalField(max_digits=10, decimal_places=2)
+
+
 class Purchase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
@@ -16,7 +23,7 @@ class Purchase(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line_id} {self.comment[:20]} ...'
+        return f'{self.date} {self.amount} {self.budget_line} {self.comment[:20]} ...'
 
 
 class Income(models.Model):
@@ -32,7 +39,7 @@ class Income(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line_id} {self.comment[:20]} ...'
+        return f'{self.date} {self.amount} {self.budget_line} {self.comment[:20]} ...'
 
 
 class PurchaseBudgetLine(models.Model):

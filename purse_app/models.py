@@ -38,6 +38,12 @@ class Income(models.Model):
 class PurchaseBudgetLine(models.Model):
     line = models.CharField(max_length=40, unique=True)
 
+    def __str__(self):
+        return f'{self.line}'
+
 
 class IncomeBudgetLine(models.Model):
     line = models.CharField(max_length=40, unique=True)
+
+    def __str__(self):
+        return f'{self.line}'

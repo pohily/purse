@@ -2,11 +2,14 @@
 
 {% block content %}
 
-    <h1>Новая накладная</h1>
-    <form method="POST" class="post-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Сохранить</button>
-    </form>
+<h1>Новая накладная</h1>
+<form method="POST" class="post-form">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <button type="submit" class="btn">Сохранить</button>
+</form>
 
 {% endblock %}

@@ -1,9 +1,5 @@
-h1 a {
+.page-header h1 a {
     color: #FCA205;
-}
-h1, h2, h3, h4 {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 18pt;
 }
 
 body {
@@ -18,7 +14,7 @@ body {
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
-    font-size: 36pt;
+    font-size: 30pt;
     text-decoration: none;
 }
 
@@ -28,37 +24,28 @@ body {
 }
 
 
-.content h1 a, .content h1 a:visited {
-    color: #000000;
-
-}
-
-th, td {border: 1px }
-table {border: 3px}
-
-
-.date {
+.content h2 a, .content h2 a:visited {
     color: #828282;
+    font-size: 16pt;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.save {
-    float: right;
-}
-
+.content th, td {border: 1px }
+table {border: 3px}
 
 
 .content-form textarea, .content-form input {
     width: 100%;
 }
 
-.top-menu, .top-menu:hover, .top-menu:visited {
+.top-menu, .top-menu:visited {
     color: #828282;
-    font-size: 26pt;
+    font-size: 20pt;
     margin-right: 20px;
 }
 .settings {
     color: #828282;
-    font-size: 26pt;
+    font-size: 18pt;
     float-right;
 }
 

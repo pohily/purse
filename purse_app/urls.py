@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.purse_app_start, name='purse_app_start'),
     path('purse_app/purchase/', views.purchase, name='purchase'),
     path('purse_app/new_purchase/', views.new_purchase, name='new_purchase'),
+    path('purse_app/purchase_edit/<int:pk>/', views.purchase_edit, name='purchase_edit'),
 ]

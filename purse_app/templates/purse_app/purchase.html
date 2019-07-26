@@ -14,6 +14,11 @@
                 <td>{{ p.budget_line_id|linebreaksbr }}</td>
                 <td>{{ p.amount|linebreaksbr }}</td>
                 <td>{{ p.comment|linebreaksbr }}</td>
+                <td>
+                    <a class="btn btn-default" href="{% url 'purchase_edit' pk=p.pk %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
             </tr>
 
     {% endfor %}

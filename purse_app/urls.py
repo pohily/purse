@@ -22,4 +22,7 @@ urlpatterns = [
     path('purse_app/purchase/', views.purchase, name='purchase'),
     path('purse_app/new_purchase/', views.new_purchase, name='new_purchase'),
     path('purse_app/purchase_edit/<int:pk>/', views.purchase_edit, name='purchase_edit'),
+    path('purse_app/income/', views.income, name='income'),
+    path('purse_app/new_income/', views.new_income, name='new_income'),
+    path('purse_app/income_edit/<int:pk>/', views.income_edit, name='income_edit'),
 ]

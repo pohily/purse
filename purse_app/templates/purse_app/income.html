@@ -1,0 +1,26 @@
+{% extends 'purse_app/base.html' %}
+
+{% block content %}
+
+    <a href="{% url 'new_income' %}" class="top-menu">
+        <span class="glyphicon glyphicon-plus">Новая накладная</span>
+    </a>
+    <br>
+    <table class="table">
+    {% for i in incomes %}
+
+            <tr class="table">
+                <td>{{ i.date }}</td>
+                <td>{{ i.budget_line_id|linebreaksbr }}</td>
+                <td>{{ i.amount|linebreaksbr }}</td>
+                <td>{{ i.comment|linebreaksbr }}</td>
+                <td>
+                    <a class="btn btn-default" href="{% url 'income_edit' pk=i.pk %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
-from .forms import PurchaseForm
+from .forms import PurchaseForm, IncomeForm
 
 
 def purse_app_start(request):
@@ -9,7 +9,35 @@ def purse_app_start(request):
 
 
 def income(request):
-    return render(request, 'purse_app/income.html', {})
+    incomes = Income.objects.all().order_by('date')[:10]
+    return render(request, 'purse_app/income.html', {'incomes': incomes})
+
+
+def new_income(request):
+    if request.method == "POST":
+        form = IncomeForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
+            return redirect('income')
+    else:
+        form = IncomeForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
+def income_edit(request, pk):
+    item = get_object_or_404(Income, pk=pk)
+    if request.method == "POST":
+        form = IncomeForm(request.POST, instance=item)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
+            return redirect('income')
+    else:
+        form = IncomeForm(instance=item)
+    return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
 def purchase(request):
@@ -27,7 +55,7 @@ def new_purchase(request):
             return redirect('purchase')
     else:
         form = PurchaseForm()
-    return render(request, 'purse_app/purchase_edit.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
 def purchase_edit(request, pk):
@@ -41,7 +69,7 @@ def purchase_edit(request, pk):
             return redirect('purchase')
     else:
         form = PurchaseForm(instance=item)
-    return render(request, 'purse_app/purchase_edit.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
 def debit(request):

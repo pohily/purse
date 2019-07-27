@@ -1,7 +1,17 @@
 {% extends 'purse_app/base.html' %}
 
 {% block content %}
-
+    <h2>Ваши депозиты</h2>
+    {% for d in deb %}
+        <table class="table">
+            <tr>
+                <td>{{ d.name }}</td>
+                <td>{{ d.amount }}</td>
+                <td>{{ d.comment }}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    <br>
     <div class="content">
         <h2><a href="{% url 'debit_cards' %}">Новая дебетовая карта</a></h2>
         <p>Тут можно завести новую дебетовую карту.</p>

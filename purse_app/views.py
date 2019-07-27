@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -9,7 +11,9 @@ def purse_app_start(request):
 
 
 def settings(request):
-    return render(request, 'purse_app/settings.html', {})
+    pline = PurchaseBudgetLine.objects.all()
+    iline = IncomeBudgetLine.objects.all()
+    return render(request, 'purse_app/settings.html', {'pline': pline, 'iline': iline})
 
 
 def summary_settings(request):
@@ -112,7 +116,8 @@ def purchase_edit(request, pk):
 
 
 def debit(request):
-    return render(request, 'purse_app/debit.html', {})
+    deb = chain(OtherDebits.objects.all(), DebitCards.objects.all())
+    return render(request, 'purse_app/debit.html', {'deb': deb})
 
 
 def debit_cards(request):
@@ -138,7 +143,9 @@ def other_debits(request):
 
 
 def credit(request):
-    return render(request, 'purse_app/credit.html', {})
+    otherCredits = OtherCredits.objects.all()
+    creditCards = CreditCards.objects.all()
+    return render(request, 'purse_app/credit.html', {'otherCredits': otherCredits, 'creditCards': creditCards})
 
 
 def credit_cards(request):

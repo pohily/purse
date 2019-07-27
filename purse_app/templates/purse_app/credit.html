@@ -1,7 +1,28 @@
 {% extends 'purse_app/base.html' %}
 
 {% block content %}
-
+    <h2>Ваши кредиты</h2>
+    {% for c in creditCards %}
+        <table class="table">
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.amount }}</td>
+                <td>{{ c.credit_limit }}</td>
+                <td>{{ c.grace_period_end }}</td>
+                <td>{{ c.comment }}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    {% for c in otherCredits %}
+        <table class="table">
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.amount }}</td>
+                <td>{{ c.comment }}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    <br>
     <div class="content">
         <h2><a href="{% url 'credit_cards' %}">Новая кредитная карта</a></h2>
         <p>Тут можно завести новую кредитку.</p>

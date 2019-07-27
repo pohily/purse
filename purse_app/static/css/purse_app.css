@@ -48,5 +48,10 @@ table {border: 3px}
     font-size: 18pt;
     float-right;
 }
+.lines {
+    color: #828282;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20pt;
+}
 
 

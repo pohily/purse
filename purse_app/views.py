@@ -1,21 +1,25 @@
 from itertools import chain
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
 
 
+@login_required
 def purse_app_start(request):
     return render(request, 'purse_app/start.html', {})
 
 
+@login_required
 def settings(request):
     pline = PurchaseBudgetLine.objects.all()
     iline = IncomeBudgetLine.objects.all()
     return render(request, 'purse_app/settings.html', {'pline': pline, 'iline': iline})
 
 
+@login_required
 def summary_settings(request):
     if request.method == "POST":
         form = SummaryForm(request.POST)
@@ -29,6 +33,7 @@ def summary_settings(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def purchase_bl(request):
     if request.method == "POST":
         form = PurchaseBlForm(request.POST)
@@ -40,6 +45,7 @@ def purchase_bl(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def income_bl(request):
     if request.method == "POST":
         form = IncomeBlForm(request.POST)
@@ -51,11 +57,13 @@ def income_bl(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def income(request):
     incomes = Income.objects.all().order_by('date')[:10]
     return render(request, 'purse_app/income.html', {'incomes': incomes})
 
 
+@login_required
 def new_income(request):
     if request.method == "POST":
         form = IncomeForm(request.POST)
@@ -69,6 +77,7 @@ def new_income(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def income_edit(request, pk):
     item = get_object_or_404(Income, pk=pk)
     if request.method == "POST":
@@ -83,11 +92,13 @@ def income_edit(request, pk):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def purchase(request):
     purchases = Purchase.objects.all().order_by('date')[:10]
     return render(request, 'purse_app/purchase.html', {'purchases': purchases})
 
 
+@login_required
 def new_purchase(request):
     if request.method == "POST":
         form = PurchaseForm(request.POST)
@@ -101,6 +112,7 @@ def new_purchase(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def purchase_edit(request, pk):
     item = get_object_or_404(Purchase, pk=pk)
     if request.method == "POST":
@@ -115,11 +127,13 @@ def purchase_edit(request, pk):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def debit(request):
     deb = chain(OtherDebits.objects.all(), DebitCards.objects.all())
     return render(request, 'purse_app/debit.html', {'deb': deb})
 
 
+@login_required
 def debit_cards(request):
     if request.method == "POST":
         form = DebitCardsForm(request.POST)
@@ -131,6 +145,7 @@ def debit_cards(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def other_debits(request):
     if request.method == "POST":
         form = OtherDebitsForm(request.POST)
@@ -142,12 +157,14 @@ def other_debits(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def credit(request):
     otherCredits = OtherCredits.objects.all()
     creditCards = CreditCards.objects.all()
     return render(request, 'purse_app/credit.html', {'otherCredits': otherCredits, 'creditCards': creditCards})
 
 
+@login_required
 def credit_cards(request):
     if request.method == "POST":
         form = CreditCardsForm(request.POST)
@@ -159,6 +176,7 @@ def credit_cards(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def other_credits(request):
     if request.method == "POST":
         form = OtherCreditsForm(request.POST)
@@ -170,5 +188,6 @@ def other_credits(request):
     return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
+@login_required
 def stats(request):
     return render(request, 'purse_app/stats.html', {})

@@ -1,0 +1,15 @@
+{% extends 'purse_app/base.html' %}
+
+{% block content %}
+
+    <div class="content">
+        <h2><a href="{% url 'credit_cards' %}">Новая кредитная карта</a></h2>
+        <p>Тут можно завести новую кредитку.</p>
+    </div>
+
+    <div class="content">
+        <h2><a href="{% url 'other_credits' %}">Новый кредит</a></h2>
+        <p>Тут можно завести новые кредиты, ипотеку или если кто-то просто одолжил денег</p>
+    </div>
+
+{% endblock %}

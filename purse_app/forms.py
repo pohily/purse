@@ -60,3 +60,51 @@ class IncomeBlForm(forms.ModelForm):
         labels = {
             'line': _('Введите название новой приходной накладной'),
         }
+
+
+class CreditCardsForm(forms.ModelForm):
+
+    class Meta:
+        model = CreditCards
+        fields = ('name', 'amount', 'credit_limit', 'grace_period_end', 'comment',)
+        labels = {
+            'name': _('Введите название новой кредитной карты'),
+            'amount': _('Введите размер кредита'),
+            'credit_limit': _('Введите размер кредитного лимита'),
+            'grace_period_end': _('Введите дату окончания льготного периода'),
+            'comment': _('Комментарий'),
+        }
+
+
+class OtherCreditsForm(forms.ModelForm):
+
+    class Meta:
+        model = OtherCredits
+        fields = ('name', 'amount', 'comment',)
+        labels = {
+            'name': _('Введите название для этого кредита'),
+            'amount': _('Введите размер кредита'),
+            'comment': _('Комментарий'),
+        }
+
+
+class DebitCardsForm(forms.ModelForm):
+    class Meta:
+        model = DebitCards
+        fields = ('name', 'amount', 'comment',)
+        labels = {
+            'name': _('Введите название новой дебетовой карты'),
+            'amount': _('Сумма'),
+            'comment': _('Комментарий'),
+        }
+
+
+class OtherDebitsForm(forms.ModelForm):
+    class Meta:
+        model = OtherDebits
+        fields = ('name', 'amount', 'comment',)
+        labels = {
+            'name': _('Введите название вашего депозита'),
+            'amount': _('Сумма'),
+            'comment': _('Комментарий'),
+        }

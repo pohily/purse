@@ -115,8 +115,52 @@ def debit(request):
     return render(request, 'purse_app/debit.html', {})
 
 
+def debit_cards(request):
+    if request.method == "POST":
+        form = DebitCardsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('debit')
+    else:
+        form = DebitCardsForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
+def other_debits(request):
+    if request.method == "POST":
+        form = OtherDebitsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('debit')
+    else:
+        form = OtherDebitsForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
 def credit(request):
     return render(request, 'purse_app/credit.html', {})
+
+
+def credit_cards(request):
+    if request.method == "POST":
+        form = CreditCardsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('credit')
+    else:
+        form = CreditCardsForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
+
+
+def other_credits(request):
+    if request.method == "POST":
+        form = OtherCreditsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('credit')
+    else:
+        form = OtherCreditsForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})
 
 
 def stats(request):

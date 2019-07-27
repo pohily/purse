@@ -15,7 +15,7 @@ class Purchase(models.Model):
     date = models.DateField(default=timezone.localdate)
     budget_line = models.ForeignKey('PurchaseBudgetLine', to_field='line', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    comment = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100, blank=True)
     with_credit_card = models.ForeignKey(
         'CreditCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL
     )
@@ -35,7 +35,7 @@ class Income(models.Model):
     date = models.DateField(default=timezone.localdate)
     budget_line = models.ForeignKey('IncomeBudgetLine', to_field='line', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    comment = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100, blank=True)
     to_debit_card = models.ForeignKey('DebitCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL)
 
     def submit(self):
@@ -64,6 +64,7 @@ class IncomeBudgetLine(models.Model):
 class DebitCards(models.Model):
     name = models.CharField(max_length=40, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    comment = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -72,16 +73,18 @@ class DebitCards(models.Model):
 class OtherDebits(models.Model):
     name = models.CharField(max_length=40, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    comment = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f'{self.name} {self.amount}'
+        return f'{self.name} {self.amount} {self.comment}'
 
 
 class CreditCards(models.Model):
     name = models.CharField(max_length=40, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    credit_limit = models.DecimalField(max_digits=10, default=1, decimal_places=2)
     grace_period_end = models.DateField(default=timezone.localdate)
-    comment = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -90,7 +93,7 @@ class CreditCards(models.Model):
 class OtherCredits(models.Model):
     name = models.CharField(max_length=40, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    comment = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f'{self.name} {self.amount}'
+        return f'{self.name} {self.amount} {self.comment}'

@@ -32,4 +32,12 @@ urlpatterns = [
     path('purse_app/income/', views.income, name='income'),
     path('purse_app/new_income/', views.new_income, name='new_income'),
     path('purse_app/income_edit/<int:pk>/', views.income_edit, name='income_edit'),
+
+    path('purse_app/credit/', views.credit, name='credit'),
+    path('purse_app/credit_cards/', views.credit_cards, name='credit_cards'),
+    path('purse_app/other_credits/', views.other_credits, name='other_credits'),
+
+    path('purse_app/debit/', views.debit, name='debit'),
+    path('purse_app/debit_cards/', views.debit_cards, name='debit_cards'),
+    path('purse_app/other_debits/', views.other_debits, name='other_debits'),
 ]

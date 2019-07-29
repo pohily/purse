@@ -40,4 +40,6 @@ urlpatterns = [
     path('purse_app/debit/', views.debit, name='debit'),
     path('purse_app/debit_cards/', views.debit_cards, name='debit_cards'),
     path('purse_app/other_debits/', views.other_debits, name='other_debits'),
+
+    path('accounts/new_user/', views.new_user, name='new_user'),
 ]

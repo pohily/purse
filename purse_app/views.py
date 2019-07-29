@@ -2,6 +2,8 @@ from itertools import chain
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import *
 from .forms import *
@@ -191,3 +193,15 @@ def other_credits(request):
 @login_required
 def stats(request):
     return render(request, 'purse_app/stats.html', {})
+
+
+def new_user(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            User.objects.create_user(form.cleaned_data["fullname", "password"])
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'purse_app/edit_form.html', {'form': form})

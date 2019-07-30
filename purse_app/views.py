@@ -23,6 +23,7 @@ def settings(request):
 
 @login_required
 def summary_settings(request):
+    header = 'Первоначальные финансовые настройки'
     if request.method == "POST":
         form = SummaryForm(request.POST)
         if form.is_valid():
@@ -32,11 +33,12 @@ def summary_settings(request):
             return redirect('settings')
     else:
         form = SummaryForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def purchase_bl(request):
+    header = 'Новая статья расходов'
     if request.method == "POST":
         form = PurchaseBlForm(request.POST)
         if form.is_valid():
@@ -44,11 +46,12 @@ def purchase_bl(request):
             return redirect('settings')
     else:
         form = PurchaseBlForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def income_bl(request):
+    header = 'Новая статья доходов'
     if request.method == "POST":
         form = IncomeBlForm(request.POST)
         if form.is_valid():
@@ -56,7 +59,7 @@ def income_bl(request):
             return redirect('settings')
     else:
         form = IncomeBlForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
@@ -67,6 +70,7 @@ def income(request):
 
 @login_required
 def new_income(request):
+    header = 'Новая накладная'
     if request.method == "POST":
         form = IncomeForm(request.POST)
         if form.is_valid():
@@ -76,11 +80,12 @@ def new_income(request):
             return redirect('income')
     else:
         form = IncomeForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def income_edit(request, pk):
+    header = 'Редактирование накладной'
     item = get_object_or_404(Income, pk=pk)
     if request.method == "POST":
         form = IncomeForm(request.POST, instance=item)
@@ -91,7 +96,7 @@ def income_edit(request, pk):
             return redirect('income')
     else:
         form = IncomeForm(instance=item)
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
@@ -102,6 +107,7 @@ def purchase(request):
 
 @login_required
 def new_purchase(request):
+    header = 'Новая накладная'
     if request.method == "POST":
         form = PurchaseForm(request.POST)
         if form.is_valid():
@@ -111,11 +117,12 @@ def new_purchase(request):
             return redirect('purchase')
     else:
         form = PurchaseForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def purchase_edit(request, pk):
+    header = 'Редактирование накладной'
     item = get_object_or_404(Purchase, pk=pk)
     if request.method == "POST":
         form = PurchaseForm(request.POST, instance=item)
@@ -126,7 +133,7 @@ def purchase_edit(request, pk):
             return redirect('purchase')
     else:
         form = PurchaseForm(instance=item)
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
@@ -137,6 +144,7 @@ def debit(request):
 
 @login_required
 def debit_cards(request):
+    header = 'Новая дебетовая карта'
     if request.method == "POST":
         form = DebitCardsForm(request.POST)
         if form.is_valid():
@@ -144,11 +152,12 @@ def debit_cards(request):
             return redirect('debit')
     else:
         form = DebitCardsForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def other_debits(request):
+    header = 'Новый депозит/долг'
     if request.method == "POST":
         form = OtherDebitsForm(request.POST)
         if form.is_valid():
@@ -156,7 +165,7 @@ def other_debits(request):
             return redirect('debit')
     else:
         form = OtherDebitsForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
@@ -168,6 +177,7 @@ def credit(request):
 
 @login_required
 def credit_cards(request):
+    header = 'Новая кредитная карта'
     if request.method == "POST":
         form = CreditCardsForm(request.POST)
         if form.is_valid():
@@ -175,11 +185,12 @@ def credit_cards(request):
             return redirect('credit')
     else:
         form = CreditCardsForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
 def other_credits(request):
+    header = 'Новый кредит'
     if request.method == "POST":
         form = OtherCreditsForm(request.POST)
         if form.is_valid():
@@ -187,7 +198,7 @@ def other_credits(request):
             return redirect('credit')
     else:
         form = OtherCreditsForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required
@@ -196,6 +207,7 @@ def stats(request):
 
 
 def new_user(request):
+    header = 'Новый пользователь'
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -204,4 +216,4 @@ def new_user(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})

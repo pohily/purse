@@ -11,11 +11,13 @@ from .forms import *
 
 @login_required
 def purse_app_start(request):
+    ''' Стартовая страница'''
     return render(request, 'purse_app/start.html', {})
 
 
 @login_required
 def settings(request):
+    ''' Вывод существующих статей расхода/дохода'''
     pline = PurchaseBudgetLine.objects.all()
     iline = IncomeBudgetLine.objects.all()
     return render(request, 'purse_app/settings.html', {'pline': pline, 'iline': iline})
@@ -64,6 +66,7 @@ def income_bl(request):
 
 @login_required
 def income(request):
+    ''' Вывод последних приходных накладных'''
     incomes = Income.objects.all().order_by('date')[:10]
     return render(request, 'purse_app/income.html', {'incomes': incomes})
 
@@ -101,6 +104,7 @@ def income_edit(request, pk):
 
 @login_required
 def purchase(request):
+    ''' Вывод последних расходных накладных'''
     purchases = Purchase.objects.all().order_by('date')[:10]
     return render(request, 'purse_app/purchase.html', {'purchases': purchases})
 
@@ -138,6 +142,7 @@ def purchase_edit(request, pk):
 
 @login_required
 def debit(request):
+    ''' Вывод существующих депозитов'''
     deb = chain(OtherDebits.objects.all(), DebitCards.objects.all())
     return render(request, 'purse_app/debit.html', {'deb': deb})
 
@@ -170,6 +175,7 @@ def other_debits(request):
 
 @login_required
 def credit(request):
+    ''' Вывод существующих кредитов и кредиток '''
     otherCredits = OtherCredits.objects.all()
     creditCards = CreditCards.objects.all()
     return render(request, 'purse_app/credit.html', {'otherCredits': otherCredits, 'creditCards': creditCards})
@@ -203,6 +209,7 @@ def other_credits(request):
 
 @login_required
 def stats(request):
+    ''' Статистика и фильтры'''
     return render(request, 'purse_app/stats.html', {})
 
 

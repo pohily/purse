@@ -30,6 +30,7 @@ def summary_settings(request):
         form = SummaryForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
+            item.owner = request.user
             item.total = item.cash + item.total_debit - item.total_credit
             item.save()
             return redirect('settings')
@@ -44,7 +45,9 @@ def purchase_bl(request):
     if request.method == "POST":
         form = PurchaseBlForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('settings')
     else:
         form = PurchaseBlForm()
@@ -57,7 +60,9 @@ def income_bl(request):
     if request.method == "POST":
         form = IncomeBlForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('settings')
     else:
         form = IncomeBlForm()
@@ -167,7 +172,9 @@ def debit_cards(request):
     if request.method == "POST":
         form = DebitCardsForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('debit')
     else:
         form = DebitCardsForm()
@@ -180,7 +187,9 @@ def other_debits(request):
     if request.method == "POST":
         form = OtherDebitsForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('debit')
     else:
         form = OtherDebitsForm()
@@ -201,7 +210,9 @@ def credit_cards(request):
     if request.method == "POST":
         form = CreditCardsForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('credit')
     else:
         form = CreditCardsForm()
@@ -214,7 +225,9 @@ def other_credits(request):
     if request.method == "POST":
         form = OtherCreditsForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect('credit')
     else:
         form = OtherCreditsForm()

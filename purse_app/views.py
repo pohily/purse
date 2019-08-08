@@ -12,7 +12,12 @@ from .forms import *
 @login_required
 def purse_app_start(request):
     ''' Стартовая страница'''
-    return render(request, 'purse_app/start.html', {})
+    summ = Summary.objects.get(owner=request.user)
+    return render(
+        request,
+        'purse_app/start.html',
+        {'cash': summ.cash, 'total': summ.total, 'total_debit': summ.total_debit, 'total_credit': summ.total_credit}
+    )
 
 
 @login_required

@@ -1,7 +1,16 @@
 {% extends 'purse_app/base.html' %}
 
 {% block content %}
+    <div class="col-md-4">
 
+    </div>
+    <div class="col-md-4">
+        Наличные: {{ cash }}
+    </div>
+    <div class="col-md-4">
+        Общий баланс: {{ total }}
+    </div>
+    <br>
     <div class="content">
         <h2><a href="{% url 'income' %}">Доходы</a></h2>
         <p>Открыть страницу для внесения нового дохода, либо для просмотра последних приходных накладных</p>
@@ -12,12 +21,12 @@
         <p>Открыть страницу для внесения нового расхода, либо для просмотра последних расходных накладных</p>
     </div>
     <div class="content">
-        <h2><a href="{% url 'debit' %}">Мне должны</a></h2>
+        <h2><a href="{% url 'debit' %}">Мне должны: {{ total_debit }} </a></h2>
         <p>Открыть страницу для работы с депозитами, дебетовыми картами и долгами</p>
     </div>
 
     <div class="content">
-        <h2><a href="{% url 'credit' %}">Я должен</a></h2>
+        <h2><a href="{% url 'credit' %}">Я должен: {{ total_credit }} </a></h2>
         <p>Открыть страницу для работы с моими кредитами и кредитными картами</p>
     </div>
 

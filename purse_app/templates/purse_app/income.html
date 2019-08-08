@@ -14,6 +14,11 @@
                 <td>{{ i.budget_line_id|linebreaksbr }}</td>
                 <td>{{ i.amount|linebreaksbr }}</td>
                 <td>{{ i.comment|linebreaksbr }}</td>
+                {% if i.to_debit_card %}
+                    <td>{{ i.to_debit_card|linebreaksbr }}</td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
                 <td>
                     <a class="btn btn-default" href="{% url 'income_edit' pk=i.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>

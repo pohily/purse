@@ -14,6 +14,18 @@
                 <td>{{ p.budget_line_id|linebreaksbr }}</td>
                 <td>{{ p.amount|linebreaksbr }}</td>
                 <td>{{ p.comment|linebreaksbr }}</td>
+
+                {% if p.with_credit_card %}
+                    <td>{{ p.with_credit_card|linebreaksbr }}</td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+                {% if p.with_debit_card %}
+                    <td>{{ p.with_debit_card|linebreaksbr }}</td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+
                 <td>
                     <a class="btn btn-default" href="{% url 'purchase_edit' pk=p.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>

@@ -78,7 +78,7 @@ def new_income(request):
         form = IncomeForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
-            item.user = request.user
+            item.owner = request.user
             item.save()
             return redirect('income')
     else:
@@ -94,7 +94,7 @@ def income_edit(request, pk):
         form = IncomeForm(request.POST, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
-            item.user = request.user
+            item.owner = request.user
             item.save()
             return redirect('income')
     else:
@@ -123,7 +123,7 @@ def new_purchase(request):
         form = PurchaseForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
-            item.user = request.user
+            item.owner = request.user
             item.save()
             return redirect('purchase')
     else:
@@ -139,7 +139,7 @@ def purchase_edit(request, pk):
         form = PurchaseForm(request.POST, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
-            item.user = request.user
+            item.owner = request.user
             item.save()
             return redirect('purchase')
     else:

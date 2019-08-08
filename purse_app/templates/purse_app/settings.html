@@ -12,7 +12,7 @@
         <p>Тут можно завести новые статьи расходов. Статьи должны быть уникальными. Существующие статьи:</p>
         {% for l in pline %}
             <span class="lines"><a href="">
-                {{ l.line }};   </a></span>
+                {{ l.line }},   </a></span>
         {% endfor %}
     </div>
 
@@ -20,7 +20,7 @@
         <h2><a href="{% url 'income_bl' %}">Статьи доходов</a></h2>
         <p>Тут можно завести новые статьи доходов. Статьи должны быть уникальными. Существующие статьи:</p>
         {% for l in iline %}
-        <span class="lines"><a href="">{{ l.line }};    </a></span>
+        <span class="lines"><a href="">{{ l.line }},    </a></span>
         {% endfor %}
     </div>
 

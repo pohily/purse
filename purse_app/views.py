@@ -83,6 +83,10 @@ def new_income(request):
         form = IncomeForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
+            if item.to_debit_card:
+                deb_car = DebitCards.objects.get(name=item.to_debit_card)
+                deb_car.amount += item.amount
+                deb_car.save()
             item.owner = request.user
             item.save()
             return redirect('income')
@@ -128,6 +132,15 @@ def new_purchase(request):
         form = PurchaseForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
+            if item.with_credit_card:
+                cr_car = CreditCards.objects.get(name=item.with_credit_card)
+                cr_car.amount += item.amount
+                cr_car.credit_limit -= item.amount
+                cr_car.save()
+            elif item.with_debit_card:
+                deb_car = DebitCards.objects.get(name=item.with_debit_card)
+                deb_car.amount -= item.amount
+                deb_car.save()
             item.owner = request.user
             item.save()
             return redirect('purchase')

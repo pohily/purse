@@ -27,7 +27,7 @@ def _get_latest_source(source_folder):
     else:
         run(f'git clone https://github.com/pohily/purse  {source_folder}')
     current_commit = local("git log -n 1 --format=%H", capture=True)
-    #run(f'cd {source_folder} && git reset --hard {current_commit}')
+    run(f'cd {source_folder} && git reset --hard {current_commit}')
 
 
 def _update_settings(source_folder, site_name):

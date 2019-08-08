@@ -9,7 +9,7 @@ ExecStart=/home/mika/sites/SITENAME/virtualenv/bin/gunicorn \
 	--bind unix:/tmp/SITENAME.socket \
 	--access-logfile ../access.log \
 	--error-logfile ../error.log \
-	superlists.wsgi:application
+	purse.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

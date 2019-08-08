@@ -28,10 +28,12 @@ urlpatterns = [
     path('purse_app/purchase/', views.purchase, name='purchase'),
     path('purse_app/new_purchase/', views.new_purchase, name='new_purchase'),
     path('purse_app/purchase_edit/<int:pk>/', views.purchase_edit, name='purchase_edit'),
+    path('purse_app/purchase_remove/<int:pk>/', views.purchase_remove, name='purchase_remove'),
 
     path('purse_app/income/', views.income, name='income'),
     path('purse_app/new_income/', views.new_income, name='new_income'),
     path('purse_app/income_edit/<int:pk>/', views.income_edit, name='income_edit'),
+    path('purse_app/income_remove/<int:pk>/', views.income_remove, name='income_remove'),
 
     path('purse_app/credit/', views.credit, name='credit'),
     path('purse_app/credit_cards/', views.credit_cards, name='credit_cards'),

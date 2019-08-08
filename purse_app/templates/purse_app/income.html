@@ -19,7 +19,12 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>
-            </tr>
+                <td>
+                    <a class="btn btn-default" href="{% url 'income_remove' pk=i.pk %}">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </td>
+            </tr>q
 
     {% endfor %}
     </table>

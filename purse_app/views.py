@@ -103,6 +103,13 @@ def income_edit(request, pk):
 
 
 @login_required
+def income_remove(request, pk):
+    item = get_object_or_404(Income, pk=pk)
+    item.delete()
+    return redirect('income')
+
+
+@login_required
 def purchase(request):
     ''' Вывод последних расходных накладных'''
     purchases = Purchase.objects.all().order_by('date')[:10]
@@ -138,6 +145,13 @@ def purchase_edit(request, pk):
     else:
         form = PurchaseForm(instance=item)
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
+
+
+@login_required
+def purchase_remove(request, pk):
+    item = get_object_or_404(Purchase, pk=pk)
+    item.delete()
+    return redirect('purchase')
 
 
 @login_required

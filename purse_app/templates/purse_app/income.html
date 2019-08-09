@@ -11,7 +11,7 @@
 
             <tr class="table">
                 <td>{{ i.date }}</td>
-                <td>{{ i.budget_line_id|linebreaksbr }}</td>
+                <td>{{ i.budget_line|linebreaksbr }}</td>
                 <td>{{ i.amount|linebreaksbr }}</td>
                 <td>{{ i.comment|linebreaksbr }}</td>
                 {% if i.to_debit_card %}

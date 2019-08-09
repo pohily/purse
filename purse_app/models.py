@@ -14,7 +14,7 @@ class Summary(models.Model):
 class Purchase(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    budget_line = models.ForeignKey('PurchaseBudgetLine', to_field='line', on_delete=models.CASCADE)
+    budget_line = models.ForeignKey('PurchaseBudgetLine', to_field='line', null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
     with_credit_card = models.ForeignKey(
@@ -34,7 +34,7 @@ class Purchase(models.Model):
 class Income(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    budget_line = models.ForeignKey('IncomeBudgetLine', to_field='line', on_delete=models.CASCADE)
+    budget_line = models.ForeignKey('IncomeBudgetLine', to_field='line', null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
     to_debit_card = models.ForeignKey('DebitCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL)

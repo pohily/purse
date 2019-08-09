@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-4">
                     {% if user.is_authenticated %}
-                        Hello, {{ user.username }} (<a href="{% url 'logout' %}">Log out</a>)
+                        Привет, {{ user.username }} (<a href="{% url 'logout' %}">Log out</a>)
                     {% else %}
                         <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
                     {% endif %}

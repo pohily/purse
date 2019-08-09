@@ -27,8 +27,8 @@ def purse_app_start(request):
 @login_required
 def settings(request):
     ''' Вывод существующих статей расхода/дохода'''
-    pline = PurchaseBudgetLine.objects.all()
-    iline = IncomeBudgetLine.objects.all()
+    pline = PurchaseBudgetLine.objects.filter(owner=request.user)
+    iline = IncomeBudgetLine.objects.filter(owner=request.user)
     return render(request, 'purse_app/settings.html', {'pline': pline, 'iline': iline})
 
 
@@ -81,7 +81,7 @@ def income_bl(request):
 @login_required
 def income(request):
     ''' Вывод последних приходных накладных'''
-    incomes = Income.objects.all().order_by('date')[:10]
+    incomes = Income.objects.filter(owner=request.user).order_by('date')[:10]
     return render(request, 'purse_app/income.html', {'incomes': incomes})
 
 
@@ -136,7 +136,7 @@ def income_remove(request, pk):
 @login_required
 def purchase(request):
     ''' Вывод последних расходных накладных'''
-    purchases = Purchase.objects.all().order_by('date')[:10]
+    purchases = Purchase.objects.filter(owner=request.user).order_by('date')[:10]
     return render(request, 'purse_app/purchase.html', {'purchases': purchases})
 
 
@@ -197,7 +197,7 @@ def purchase_remove(request, pk):
 @login_required
 def debit(request):
     ''' Вывод существующих депозитов'''
-    deb = chain(OtherDebits.objects.all(), DebitCards.objects.all())
+    deb = chain(OtherDebits.objects.filter(owner=request.user), DebitCards.objects.filter(owner=request.user))
     return render(request, 'purse_app/debit.html', {'deb': deb})
 
 
@@ -234,8 +234,8 @@ def other_debits(request):
 @login_required
 def credit(request):
     ''' Вывод существующих кредитов и кредиток '''
-    otherCredits = OtherCredits.objects.all()
-    creditCards = CreditCards.objects.all()
+    otherCredits = OtherCredits.objects.filter(owner=request.user)
+    creditCards = CreditCards.objects.filter(owner=request.user)
     return render(request, 'purse_app/credit.html', {'otherCredits': otherCredits, 'creditCards': creditCards})
 
 

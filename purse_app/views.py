@@ -276,9 +276,10 @@ def new_user(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            User.objects.create_user(form.cleaned_data["fullname", "password"])
-            return redirect('login')
+            #form.save()
+            User.objects.create_user(form.cleaned_data["username", "password"])
+
+            return redirect('purse_app_start')
     else:
         form = UserCreationForm()
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})

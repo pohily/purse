@@ -18,7 +18,7 @@ $
 \b cd deploy_tools\uc0\u8232 
 \b0 $ 
 \b fab deploy:host=mika@
-\f2\b0 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\f2\b0 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 \
 \pard\pardeftab720\sl340\sa240\partightenfactor0
@@ -31,63 +31,67 @@ create our Nginx virtual host:
 \f1\b0 \cf2 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
 \b sed "s/SITENAME/
-\f2\b0 \cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\f2\b0 \cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \expnd0\expndtw0\kerning0
 \CocoaLigature1 /g" source/deploy_tools/nginx.template.conf | sudo tee /etc/nginx/sites-available/
-\f2\b0 \cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\f2\b0 \cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \expnd0\expndtw0\kerning0
 \CocoaLigature1  
-\b0\fs24 \cf2 \cb1 \
+\b0\fs24 \cb1 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf2 \
 \pard\pardeftab720\sl340\sa240\partightenfactor0
 
 \fs28 \cf2 Next we activate that file with a symlink: \
+\pard\pardeftab720\sl340\sa240\partightenfactor0
 
 \f3\b \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
 \f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
-\b \cf2 sudo ln -s ../sites-available/
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\b sudo ln -s ../sites-available/
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1  /etc/nginx/sites-enabled/
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1  
-\b0 \cf2 \
+\b0 \
 And we write the Systemd service, with another sed: \
-elspeth@server: 
-\b \cf2 sed "s/SITENAME/
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+
+\f3\b \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
+\f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 : 
+\b sed "s/SITENAME/
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
-\CocoaLigature1 /g" source/deploy_tools/gunicorn-systemd.template.service | sudo tee /etc/systemd/system/gunicorn-s
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\CocoaLigature1 /g" source/deploy_tools/gunicorn-systemd.template.service | sudo tee /etc/systemd/system/gunicorn-
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 .service 
-\b0 \cf2 \
+\b0 \
 Finally we start both services: \
 
 \f3\b \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
 \f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
-\b \cf2 sudo systemctl daemon-reload\uc0\u8232 
+\b sudo systemctl daemon-reload\uc0\u8232 
 \f3 \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
 \f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
-\b \cf2 sudo systemctl reload nginx\uc0\u8232 
+\b sudo systemctl reload nginx\uc0\u8232 
 \f3 \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
 \f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
-\b \cf2 sudo systemctl enable gunicorn-
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\b sudo systemctl enable gunicorn-
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1  \
 
 \f3 \cf5 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 mika@pohily-site-droplet
 \f1\b0 \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1 :$ 
-\b \cf2 sudo systemctl start gunicorn-
-\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse-staging.pohily.site
+\b sudo systemctl start gunicorn-
+\f2\b0 \cf3 \cb6 \kerning1\expnd0\expndtw0 \CocoaLigature0 purse.pohily.site
 \f1\b \cf2 \cb1 \expnd0\expndtw0\kerning0
 \CocoaLigature1  \
 }

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 from .models import *
 from .forms import *
@@ -12,12 +13,15 @@ from .forms import *
 @login_required
 def purse_app_start(request):
     ''' Стартовая страница'''
-    summ = Summary.objects.get(owner=request.user)
-    return render(
-        request,
-        'purse_app/start.html',
-        {'cash': summ.cash, 'total': summ.total, 'total_debit': summ.total_debit, 'total_credit': summ.total_credit}
-    )
+    try:
+        summ = Summary.objects.get(owner=request.user)
+        return render(
+            request,
+            'purse_app/start.html',
+            {'cash': summ.cash, 'total': summ.total, 'total_debit': summ.total_debit, 'total_credit': summ.total_credit}
+        )
+    except Summary.DoesNotExist:
+        return render(request, 'purse_app/start.html')
 
 
 @login_required
@@ -276,9 +280,11 @@ def new_user(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            #form.save()
-            User.objects.create_user(form.cleaned_data["username", "password"])
-
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            User.objects.create_user(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
             return redirect('purse_app_start')
     else:
         form = UserCreationForm()

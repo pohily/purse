@@ -14,13 +14,11 @@ class Summary(models.Model):
 class Purchase(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    budget_line = models.ForeignKey('PurchaseBudgetLine', to_field='line', null=True, on_delete=models.CASCADE)
+    line = models.ManyToManyField('PurchaseBudgetLine')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
-    with_credit_card = models.ForeignKey(
-        'CreditCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL
-    )
-    with_debit_card = models.ForeignKey('DebitCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL)
+    credit_name = models.ManyToManyField('CreditCards', blank=True)
+    debit_name = models.ManyToManyField('DebitCards', blank=True)
 
     def submit(self):
         if not self.date:
@@ -28,16 +26,16 @@ class Purchase(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line} {self.comment}'
+        return f'{self.date} {self.amount} {self.line} {self.comment}'
 
 
 class Income(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    budget_line = models.ForeignKey('IncomeBudgetLine', to_field='line', null=True, on_delete=models.CASCADE)
+    line = models.ManyToManyField('IncomeBudgetLine')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
-    to_debit_card = models.ForeignKey('DebitCards', to_field='name', null=True, blank=True, on_delete=models.SET_NULL)
+    debit_name = models.ManyToManyField('DebitCards', blank=True)
 
     def submit(self):
         if not self.date:
@@ -45,12 +43,17 @@ class Income(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.date} {self.amount} {self.budget_line} {self.comment}'
+        return f'{self.date} {self.amount} {self.line} {self.comment}'
 
 
 class PurchaseBudgetLine(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    line = models.CharField(max_length=40, unique=True)
+    line = models.CharField(max_length=40)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'line'], name='unique_owner_pline')
+        ]
 
     def __str__(self):
         return f'{self.line}'
@@ -58,7 +61,12 @@ class PurchaseBudgetLine(models.Model):
 
 class IncomeBudgetLine(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    line = models.CharField(max_length=40, unique=True)
+    line = models.CharField(max_length=40)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'line'], name='unique_owner_iline')
+        ]
 
     def __str__(self):
         return f'{self.line}'
@@ -66,41 +74,61 @@ class IncomeBudgetLine(models.Model):
 
 class DebitCards(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=40, unique=True)
+    debit_name = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'debit_name'], name='unique_owner_debit_card')
+        ]
+
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.debit_name}'
 
 
 class OtherDebits(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=40, unique=True)
+    debit_name = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'debit_name'], name='unique_owner_debit')
+        ]
+
     def __str__(self):
-        return f'{self.name} {self.amount} {self.comment}'
+        return f'{self.debit_name} {self.amount} {self.comment}'
 
 
 class CreditCards(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=40, unique=True)
+    credit_name = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     credit_limit = models.DecimalField(max_digits=10, default=1, decimal_places=2)
     grace_period_end = models.DateField(default=timezone.localdate)
     comment = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'credit_name'], name='unique_owner_credit_card')
+        ]
+
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.credit_name}'
 
 
 class OtherCredits(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=40, unique=True)
+    credit_name = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'credit_name'], name='unique_owner_credit')
+        ]
+
     def __str__(self):
-        return f'{self.name} {self.amount} {self.comment}'
+        return f'{self.credit_name} {self.amount} {self.comment}'

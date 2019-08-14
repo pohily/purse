@@ -11,11 +11,11 @@
 
             <tr class="table">
                 <td>{{ i.date }}</td>
-                <td>{{ i.budget_line|linebreaksbr }}</td>
+                <td>{{ i.line|linebreaksbr }}</td>
                 <td>{{ i.amount|linebreaksbr }}</td>
                 <td>{{ i.comment|linebreaksbr }}</td>
-                {% if i.to_debit_card %}
-                    <td>{{ i.to_debit_card|linebreaksbr }}</td>
+                {% if i.debit_name %}
+                    <td>{{ i.debit_name|linebreaksbr }}</td>
                 {% else %}
                     <td> </td>
                 {% endif %}

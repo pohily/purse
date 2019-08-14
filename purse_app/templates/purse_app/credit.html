@@ -5,7 +5,7 @@
     {% for c in creditCards %}
         <table class="table">
             <tr>
-                <td>{{ c.name }}</td>
+                <td>{{ c.credit_name }}</td>
                 <td>{{ c.amount }}</td>
                 <td>{{ c.credit_limit }}</td>
                 <td>{{ c.grace_period_end }}</td>
@@ -16,7 +16,7 @@
     {% for c in otherCredits %}
         <table class="table">
             <tr>
-                <td>{{ c.name }}</td>
+                <td>{{ c.credit_name }}</td>
                 <td>{{ c.amount }}</td>
                 <td>{{ c.comment }}</td>
             </tr>

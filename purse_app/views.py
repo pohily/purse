@@ -94,12 +94,6 @@ def income(request):
 @login_required
 def new_income(request):
     header = 'Новая накладная'
-    lines = []
-    dcards = []
-    for i, l in enumerate(IncomeBudgetLine.objects.filter(owner=request.user)):
-        lines.append(l)
-    for i, d in enumerate(DebitCards.objects.filter(owner=request.user)):
-        dcards.append(d)
 
     if request.method == "POST":
         form = IncomeForm(request.user, request.POST)

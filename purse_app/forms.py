@@ -4,21 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from .models import *
 
 
-class PurchaseForm(forms.ModelForm):
-
-    class Meta:
-        model = Purchase
-        fields = ('date', 'line', 'amount', 'comment', 'credit_name', 'debit_name',)
-        labels = {
-            'date': _('Дата'),
-            'line': _('Статья'),
-            'amount': _('Сумма'),
-            'comment': _('Комментарий'),
-            'credit_name': _('Платеж кредиткой?'),
-            'debit_name': _('Платеж дебетовкой?'),
-        }
-
-
 class IncomeForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
@@ -38,6 +23,26 @@ class IncomeForm(forms.ModelForm):
             'amount': _('Сумма'),
             'comment': _('Комментарий'),
             'debit_name': _('На карту?'),
+        }
+
+
+class PurchaseForm(IncomeForm):
+
+    def __init__(self, user, *args, **kwargs):
+        super(IncomeForm, self).__init__(*args, **kwargs)
+        self.fields['line'].widget = forms.Select()
+        self.fields['line'].queryset = PurchaseBudgetLine.objects.filter(owner=user)
+        self.fields['debit_name'].widget = forms.Select()
+        self.fields['debit_name'].queryset = DebitCards.objects.filter(owner=user)
+        self.fields['credit_name'].widget = forms.Select()
+        self.fields['credit_name'].queryset = CreditCards.objects.filter(owner=user)
+
+    class Meta:
+        model = Purchase
+        fields = ('date', 'line', 'amount', 'comment', 'credit_name', 'debit_name',)
+        labels = {
+            'credit_name': _('Платеж кредиткой?'),
+            'debit_name': _('Платеж дебетовкой?'),
         }
 
 

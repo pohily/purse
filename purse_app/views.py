@@ -91,7 +91,6 @@ def income(request):
     return render(request, 'purse_app/income.html', {'incomes': incomes})
 
 
-
 @login_required
 def new_income(request):
     header = 'Новая накладная'
@@ -158,7 +157,7 @@ def purchase(request):
 def new_purchase(request):
     header = 'Новая накладная'
     if request.method == "POST":
-        form = PurchaseForm(request.POST)
+        form = PurchaseForm(request.user, request.POST)
         if form.is_valid():
             item = form.save(commit=False)
             item.owner = request.user
@@ -181,7 +180,7 @@ def new_purchase(request):
             item.save()
             return redirect('purchase')
     else:
-        form = PurchaseForm()
+        form = PurchaseForm(request.user)
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 

@@ -107,13 +107,16 @@ def new_income(request):
             item = form.save(commit=False)
             item.owner = request.user
             summ = Summary.objects.get(owner=item.owner)
-            if item.to_debit_card:
-                deb_car = DebitCards.objects.get(name=item.to_debit_card)
-                deb_car.amount += item.amount
-                deb_car.save()
-                summ.total_debit += item.amount
-            else:
-                summ.cash += item.amount
+            try:
+                if item.to_debit_card:
+                    deb_car = DebitCards.objects.get(name=item.to_debit_card)
+                    deb_car.amount += item.amount
+                    deb_car.save()
+                    summ.total_debit += item.amount
+                else:
+                    summ.cash += item.amount
+            except AttributeError:
+                pass
             summ.total += item.amount
             summ.save()
             item.save()
@@ -128,14 +131,14 @@ def income_edit(request, pk):
     header = 'Редактирование накладной'
     item = get_object_or_404(Income, pk=pk)
     if request.method == "POST":
-        form = IncomeForm(request.POST, instance=item)
+        form = IncomeForm(request.user, request.POST, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
             item.owner = request.user
             item.save()
             return redirect('income')
     else:
-        form = IncomeForm(instance=item)
+        form = IncomeForm(request.user, instance=item)
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
@@ -162,19 +165,22 @@ def new_purchase(request):
             item = form.save(commit=False)
             item.owner = request.user
             summ = Summary.objects.get(owner=item.owner)
-            if item.with_credit_card:
-                cr_car = CreditCards.objects.get(name=item.with_credit_card)
-                cr_car.amount += item.amount
-                cr_car.credit_limit -= item.amount
-                cr_car.save()
-                summ.total_credit += item.amount
-            elif item.with_debit_card:
-                deb_car = DebitCards.objects.get(name=item.with_debit_card)
-                deb_car.amount -= item.amount
-                deb_car.save()
-                summ.total_debit -= item.amount
-            else:
-                summ.cash -= item.amount
+            try:
+                if item.with_credit_card:
+                    cr_car = CreditCards.objects.get(name=item.with_credit_card)
+                    cr_car.amount += item.amount
+                    cr_car.credit_limit -= item.amount
+                    cr_car.save()
+                    summ.total_credit += item.amount
+                elif item.with_debit_card:
+                    deb_car = DebitCards.objects.get(name=item.with_debit_card)
+                    deb_car.amount -= item.amount
+                    deb_car.save()
+                    summ.total_debit -= item.amount
+                else:
+                    summ.cash -= item.amount
+            except AttributeError:
+                pass
             summ.total -= item.amount
             summ.save()
             item.save()
@@ -189,14 +195,14 @@ def purchase_edit(request, pk):
     header = 'Редактирование накладной'
     item = get_object_or_404(Purchase, pk=pk)
     if request.method == "POST":
-        form = PurchaseForm(request.POST, instance=item)
+        form = PurchaseForm(request.user, request.POST, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
             item.owner = request.user
             item.save()
             return redirect('purchase')
     else:
-        form = PurchaseForm(instance=item)
+        form = PurchaseForm(request.user, instance=item)
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 

@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.forms import modelform_factory
 from django.forms import Select
 from django.db.models import Q
+from django.utils import timezone
 
 from .models import *
 from .forms import *
@@ -94,26 +95,15 @@ def income(request):
 @login_required
 def new_income(request):
     header = 'Новая накладная'
-    lines = {}
-    dcards = {}
+    lines = []
+    dcards = []
     for i, l in enumerate(IncomeBudgetLine.objects.filter(owner=request.user)):
-        lines[i] = l
+        lines.append(l)
     for i, d in enumerate(DebitCards.objects.filter(owner=request.user)):
-        dcards[i] = d
-    IncForm = modelform_factory(Income, fields=('date', 'line', 'amount', 'comment', 'debit_name',),
-                               widgets={
-                                    'line': Select(attrs=lines),
-                                    'debit_name': Select(attrs=dcards),
-                                },
-                                labels={
-            'date': _('Дата'),
-            'line': _('Статья'),
-            'amount': _('Сумма'),
-            'comment': _('Комментарий'),
-            'debit_name': _('На карту?'),
-        })
+        dcards.append(d)
+
     if request.method == "POST":
-        form = IncForm(request.POST)
+        form = IncomeForm(request.user, request.POST)
         if form.is_valid():
             item = form.save(commit=False)
             item.owner = request.user
@@ -130,7 +120,7 @@ def new_income(request):
             item.save()
             return redirect('income')
     else:
-        form = IncForm()
+        form = IncomeForm(request.user)
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 

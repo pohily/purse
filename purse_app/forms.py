@@ -21,6 +21,14 @@ class PurchaseForm(forms.ModelForm):
 
 class IncomeForm(forms.ModelForm):
 
+    def __init__(self, user, *args, **kwargs):
+        super(IncomeForm, self).__init__(*args, **kwargs)
+        self.fields['line'].widget = forms.Select()
+        self.fields['line'].queryset = IncomeBudgetLine.objects.filter(owner=user)
+        self.fields['debit_name'].widget = forms.Select()
+        self.fields['debit_name'].queryset = DebitCards.objects.filter(owner=user)
+
+
     class Meta:
         model = Income
         fields = ('date', 'line', 'amount', 'comment', 'debit_name',)

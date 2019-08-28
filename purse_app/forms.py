@@ -8,9 +8,9 @@ class IncomeForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(IncomeForm, self).__init__(*args, **kwargs)
-        self.fields['line'].widget = forms.Select()
+        #self.fields['line'].widget = forms.Select()
         self.fields['line'].queryset = IncomeBudgetLine.objects.filter(owner=user)
-        self.fields['debit_name'].widget = forms.Select()
+        #self.fields['debit_name'].widget = forms.Select()
         self.fields['debit_name'].queryset = DebitCards.objects.filter(owner=user)
 
 
@@ -30,11 +30,11 @@ class PurchaseForm(IncomeForm):
 
     def __init__(self, user, *args, **kwargs):
         super(IncomeForm, self).__init__(*args, **kwargs)
-        self.fields['line'].widget = forms.Select()
+        #self.fields['line'].widget = forms.Select()
         self.fields['line'].queryset = PurchaseBudgetLine.objects.filter(owner=user)
-        self.fields['debit_name'].widget = forms.Select()
+        #self.fields['debit_name'].widget = forms.Select()
         self.fields['debit_name'].queryset = DebitCards.objects.filter(owner=user)
-        self.fields['credit_name'].widget = forms.Select()
+        #self.fields['credit_name'].widget = forms.Select()
         self.fields['credit_name'].queryset = CreditCards.objects.filter(owner=user)
 
     class Meta:

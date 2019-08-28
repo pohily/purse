@@ -14,11 +14,11 @@ class Summary(models.Model):
 class Purchase(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    line = models.ManyToManyField('PurchaseBudgetLine')
+    line = models.ForeignKey('PurchaseBudgetLine', blank=True, null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
-    credit_name = models.ManyToManyField('CreditCards', blank=True)
-    debit_name = models.ManyToManyField('DebitCards', blank=True)
+    credit_name = models.ForeignKey('CreditCards', blank=True, null=True, on_delete=models.CASCADE)
+    debit_name = models.ForeignKey('DebitCards', blank=True, null=True, on_delete=models.CASCADE)
 
     def submit(self):
         if not self.date:
@@ -32,10 +32,10 @@ class Purchase(models.Model):
 class Income(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.localdate)
-    line = models.ManyToManyField('IncomeBudgetLine')
+    line = models.ForeignKey('IncomeBudgetLine', blank=True, null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.CharField(max_length=100, blank=True)
-    debit_name = models.ManyToManyField('DebitCards', blank=True)
+    debit_name = models.ForeignKey('DebitCards', blank=True, null=True, on_delete=models.CASCADE)
 
     def submit(self):
         if not self.date:

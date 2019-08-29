@@ -42,7 +42,7 @@ def settings(request):
 
 @login_required
 def summary_settings(request):
-    header = 'Первоначальные финансовые настройки'
+    header = 'Первоначальные финансовые данные'
     extra = 'Внесите данные о всех ваших финансовых средствах для корректного ведения статистики в Purse'
     if request.method == "POST":
         form = SummaryForm(request.POST)
@@ -55,15 +55,24 @@ def summary_settings(request):
     else:
         try:
             summ = Summary.objects.get(owner=request.user)
-            form = SummaryForm(initial={
-                'cash': summ.cash,
-                'total': summ.total,
-                'total_debit': summ.total_debit,
-                'total_credit': summ.total_credit,
-            })
+            return redirect('summary_settings_edit', pk=summ.pk)
         except Summary.DoesNotExist:
             form = SummaryForm()
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header, 'extra': extra})
+
+
+@login_required
+def summary_settings_edit(request, pk):
+    header = 'Внимание! Редактирование первоначальных финансовых данных следует выполнять в крайне аккуратно.'
+    item = get_object_or_404(Summary, pk=pk)
+    if request.method == "POST":
+        form = SummaryForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('settings')
+    else:
+        form = SummaryForm(instance=item)
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
 
 
 @login_required

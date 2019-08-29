@@ -22,6 +22,8 @@ urlpatterns = [
 
     path('purse_app/settings/', views.settings, name='settings'),
     path('purse_app/summary_settings/', views.summary_settings, name='summary_settings'),
+    path('purse_app/summary_settings_edit/<int:pk>/', views.summary_settings_edit, name='summary_settings_edit'),
+
     path('purse_app/purchase_bl/', views.purchase_bl, name='purchase_bl'),
     path('purse_app/income_bl/', views.income_bl, name='income_bl'),
 

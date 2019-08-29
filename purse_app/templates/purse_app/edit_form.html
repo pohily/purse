@@ -4,6 +4,7 @@
 
 <h1>{{ header }}</h1>
 <p>{{ extra }}</p>
+
 <form method="POST" class="post-form">
     {% csrf_token %}
     <table>
@@ -11,6 +12,7 @@
     </table>
 
     <button type="submit" class="save btn btn-default">Сохранить</button>
+
 </form>
 
 {% endblock %}

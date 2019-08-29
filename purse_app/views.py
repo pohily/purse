@@ -105,8 +105,8 @@ def new_income(request):
             item.owner = request.user
             summ = Summary.objects.get(owner=item.owner)
             try:
-                if item.to_debit_card:
-                    deb_car = DebitCards.objects.get(name=item.to_debit_card)
+                if item.debit_name:
+                    deb_car = DebitCards.objects.filter(owner=item.owner).get(debit_name=item.debit_name)
                     deb_car.amount += item.amount
                     deb_car.save()
                     summ.total_debit += item.amount
@@ -163,14 +163,14 @@ def new_purchase(request):
             item.owner = request.user
             summ = Summary.objects.get(owner=item.owner)
             try:
-                if item.with_credit_card:
-                    cr_car = CreditCards.objects.get(name=item.with_credit_card)
+                if item.credit_name:
+                    cr_car = CreditCards.objects.filter(owner=item.owner).get(credit_name=item.credit_name)
                     cr_car.amount += item.amount
                     cr_car.credit_limit -= item.amount
                     cr_car.save()
                     summ.total_credit += item.amount
-                elif item.with_debit_card:
-                    deb_car = DebitCards.objects.get(name=item.with_debit_card)
+                elif item.debit_name:
+                    deb_car = DebitCards.objects.filter(owner=item.owner).get(debit_name=item.debit_name)
                     deb_car.amount -= item.amount
                     deb_car.save()
                     summ.total_debit -= item.amount

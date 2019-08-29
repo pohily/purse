@@ -6,11 +6,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from django.utils.translation import gettext_lazy as _
-from django.forms import modelform_factory
-from django.forms import Select
-from django.db.models import Q
-from django.utils import timezone
 
 from .models import *
 from .forms import *
@@ -27,7 +22,8 @@ def purse_app_start(request):
             {'cash': summ.cash, 'total': summ.total, 'total_debit': summ.total_debit, 'total_credit': summ.total_credit}
         )
     except Summary.DoesNotExist:
-        return render(request, 'purse_app/start.html')
+        return redirect('summary_settings')
+
 
 
 @login_required

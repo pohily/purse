@@ -43,5 +43,7 @@ urlpatterns = [
     path('purse_app/debit_cards/', views.debit_cards, name='debit_cards'),
     path('purse_app/other_debits/', views.other_debits, name='other_debits'),
 
+    path('purse_app/statistics/', views.statistics, name='statistics'),
+
     path('accounts/new_user/', views.new_user, name='new_user'),
 ]

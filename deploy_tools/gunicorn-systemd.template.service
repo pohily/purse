@@ -7,7 +7,7 @@ User=mika
 WorkingDirectory=/home/mika/sites/SITENAME/source
 ExecStart=/home/mika/sites/SITENAME/virtualenv/bin/gunicorn \
 	--bind unix:/tmp/SITENAME.socket \
-	--capture-output
+	--capture-output \
 	--access-logfile ../access.log \
 	--error-logfile ../error.log \
 	purse.wsgi:application

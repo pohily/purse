@@ -31,6 +31,12 @@ def purse_app_start(request):
 
 
 @login_required
+def statistics(request):
+    ''' Вывод статистики и аналитики '''
+    return render(request, 'purse_app/statistics.html')
+
+
+@login_required
 def settings(request):
     ''' Вывод существующих статей расхода/дохода'''
     pline = PurchaseBudgetLine.objects.filter(owner=request.user)
@@ -41,6 +47,7 @@ def settings(request):
 @login_required
 def summary_settings(request):
     header = 'Первоначальные финансовые настройки'
+    extra = 'Внесите данные о всех ваших финансовых средствах для корректного ведения статистики в Purse'
     if request.method == "POST":
         form = SummaryForm(request.POST)
         if form.is_valid():
@@ -51,7 +58,7 @@ def summary_settings(request):
             return redirect('settings')
     else:
         form = SummaryForm()
-    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header})
+    return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header, 'extra': extra})
 
 
 @login_required

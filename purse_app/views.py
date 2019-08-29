@@ -53,7 +53,16 @@ def summary_settings(request):
             item.save()
             return redirect('settings')
     else:
-        form = SummaryForm()
+        try:
+            summ = Summary.objects.get(owner=request.user)
+            form = SummaryForm(initial={
+                'cash': summ.cash,
+                'total': summ.total,
+                'total_debit': summ.total_debit,
+                'total_credit': summ.total_credit,
+            })
+        except Summary.DoesNotExist:
+            form = SummaryForm()
     return render(request, 'purse_app/edit_form.html', {'form': form, 'header': header, 'extra': extra})
 
 
